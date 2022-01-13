@@ -16,7 +16,7 @@ public class JsonVisitorUtils {
         value = value.getPrevSibling();
 
         if (value == null) {
-            System.out.println("Well, that's not good.");
+            LOGGER.info("Failed to find JSON key from value: previous sibling was null.");
             return null;
         }
 

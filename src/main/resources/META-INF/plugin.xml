@@ -11,8 +11,6 @@
         <projectService serviceImplementation="org.thepeacockproject.idea.services.PeacockProjectService" />
         <completion.contributor implementationClass="org.thepeacockproject.idea.intelligence.JsonExtraCompletionProvider" language="JSON" />
         <fileType name="OCRE" implementationClass="org.thepeacockproject.idea.ocre.OcreFileType" language="JSON" patterns="*.ocre" />
-        <!--suppress PluginXmlValidity -->
-        <lang.directNavigationProvider implementation="org.thepeacockproject.idea.intelligence.navigation.JsonDirectNavigationProvider" />
     </extensions>
 
     <applicationListeners>

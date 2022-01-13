@@ -6,9 +6,8 @@ import com.intellij.json.JsonLanguage;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.thepeacockproject.idea.PluginBundle;
 
-import javax.swing.*;
+import javax.swing.Icon;
 
 public class OcreFileType extends JsonFileType {
     protected OcreFileType() {

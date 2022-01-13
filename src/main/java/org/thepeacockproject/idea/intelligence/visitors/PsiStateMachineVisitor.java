@@ -4,6 +4,7 @@ import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiRecursiveElementWalkingVisitor;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.thepeacockproject.idea.intelligence.data.StateData;
 import org.thepeacockproject.idea.intelligence.data.StateMachineData;
 
@@ -50,26 +51,10 @@ public class PsiStateMachineVisitor extends PsiRecursiveElementWalkingVisitor {
 
                                 sm.stateDataList.add(d);
 
-                                // alright, we got a state, now let's figure out which objective this was in
-                                final PsiElement smCandidate = rootStateMachine(element);
+                                sm.id = getStateMachineId(element);
 
-                                if (smCandidate == null) {
-                                    LOGGER.error(new AssertionError("Candidate was null, not sure why."));
+                                if (sm.id == null) {
                                     break;
-                                }
-
-                                for (PsiElement smNodeChild : smCandidate.getChildren()) {
-                                    if (className(smNodeChild).equals("JsonPropertyImpl")) {
-                                        for (PsiElement stateMachineChild : smNodeChild.getChildren()) {
-                                            if (className(stateMachineChild).equals("JsonStringLiteralImpl") && stateMachineChild.textMatches("\"Id\"")) {
-                                                // woo, we got the Id field, let's get the value
-
-                                                final PsiElement idLiteral = stateMachineChild.getNextSibling().getNextSibling().getNextSibling();
-
-                                                sm.id = idLiteral.getText().replace("\"", "");
-                                            }
-                                        }
-                                    }
                                 }
 
                                 this.stateMachines.add(sm);
@@ -81,5 +66,31 @@ public class PsiStateMachineVisitor extends PsiRecursiveElementWalkingVisitor {
         }
 
         super.visitElement(element);
+    }
+
+    public static @Nullable String getStateMachineId(@NotNull PsiElement element) {
+        // alright, we got a state, now let's figure out which objective this was in
+        final PsiElement smCandidate = rootStateMachine(element);
+
+        if (smCandidate == null) {
+            LOGGER.error(new AssertionError("Candidate was null, not sure why."));
+            return null;
+        }
+
+        for (PsiElement smNodeChild : smCandidate.getChildren()) {
+            if (className(smNodeChild).equals("JsonPropertyImpl")) {
+                for (PsiElement stateMachineChild : smNodeChild.getChildren()) {
+                    if (className(stateMachineChild).equals("JsonStringLiteralImpl") && stateMachineChild.textMatches("\"Id\"")) {
+                        // we got the Id field, let's get the value
+
+                        final PsiElement idLiteral = stateMachineChild.getNextSibling().getNextSibling().getNextSibling();
+
+                        return idLiteral.getText().replace("\"", "");
+                    }
+                }
+            }
+        }
+
+        return null;
     }
 }
