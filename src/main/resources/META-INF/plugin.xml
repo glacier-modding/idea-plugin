@@ -1,0 +1,20 @@
+<!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
+<idea-plugin>
+    <id>org.thepeacockproject.idea</id>
+    <name>Peacock for IDEA</name>
+    <vendor url="https://thepeacockproject.org">The Peacock Project</vendor>
+    <description>Plugin that adds Peacock-specific functionality to the IDEA platform.</description>
+
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <projectService serviceImplementation="org.thepeacockproject.idea.services.PeacockProjectService" />
+        <completion.contributor implementationClass="org.thepeacockproject.idea.intelligence.JsonExtraCompletionProvider" language="JSON" />
+        <fileType name="OCRE" implementationClass="org.thepeacockproject.idea.ocre.OcreFileType" language="JSON" patterns="*.ocre" />
+        <!--suppress PluginXmlValidity -->
+        <lang.directNavigationProvider implementation="org.thepeacockproject.idea.intelligence.navigation.JsonDirectNavigationProvider" />
+    </extensions>
+
+    <applicationListeners>
+    </applicationListeners>
+</idea-plugin>
