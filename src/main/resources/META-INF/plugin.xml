@@ -2,7 +2,7 @@
 <idea-plugin>
     <id>org.thepeacockproject.idea</id>
     <name>Peacock for IDEA</name>
-    <vendor url="https://thepeacockproject.org">The Peacock Project</vendor>
+    <vendor url="https://thepeacockproject.org" email="admin@thepeacockproject.org">The Peacock Project</vendor>
     <description>Plugin that adds Peacock-specific functionality to the IDEA platform.</description>
 
     <depends>com.intellij.modules.platform</depends>
@@ -10,8 +10,21 @@
     <extensions defaultExtensionNs="com.intellij">
         <projectService serviceImplementation="org.thepeacockproject.idea.services.PeacockProjectService" />
         <completion.contributor implementationClass="org.thepeacockproject.idea.intelligence.JsonExtraCompletionProvider" language="JSON" />
-        <fileType name="OCRE" implementationClass="org.thepeacockproject.idea.ocre.OcreFileType" language="JSON" patterns="*.ocre" />
+        <fileType name="OCRE"
+                  implementationClass="org.thepeacockproject.idea.ocre.OcreFileType"
+                  language="JSON"
+                  patterns="*.ocre" />
+        <fileType name="REPO"
+                  implementationClass="org.thepeacockproject.idea.repo.GameRepositoryFileType"
+                  fileNames="006D6B8D26B0F442.REPO;00204D1AFD76AB13.REPO"
+                  language="JSON"
+        />
         <gotoDeclarationHandler implementation="org.thepeacockproject.idea.intelligence.JsonGotoDeclarationHandler" />
+        <applicationService serviceImplementation="org.thepeacockproject.idea.settings.PeacockSettingsState" />
+        <applicationConfigurable parentId="tools"
+                                 instance="org.thepeacockproject.idea.settings.PeacockSettingsConfigurable"
+                                 id="org.thepeacockproject.idea.settings.PeacockSettingsConfigurable"
+                                 displayName="Peacock Plugin" />
     </extensions>
 
     <applicationListeners>

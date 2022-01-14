@@ -21,7 +21,7 @@ public class OcreFileType extends JsonFileType {
 
     @Override
     public @NotNull String getDescription() {
-        return "OpenContracts Registry Entry (OCRE) file.";
+        return "Contract (OCRE)";
     }
 
     @Override
