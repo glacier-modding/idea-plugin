@@ -48,7 +48,7 @@ public class JsonExtraCompletionProvider extends CompletionContributor {
             // TODO: Cache this
             projectService.computeFor(parameters.getOriginalFile());
 
-            List<StateMachineData> states = projectService.getDataFor(
+            final List<StateMachineData> states = projectService.getDataFor(
                     parameters.getOriginalFile().getName()
             );
 

@@ -10,6 +10,7 @@ import org.thepeacockproject.idea.intelligence.data.StateMachineData;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static org.thepeacockproject.idea.intelligence.visitors.JsonVisitorUtils.className;
 import static org.thepeacockproject.idea.intelligence.visitors.JsonVisitorUtils.rootStateMachine;
@@ -51,7 +52,9 @@ public class PsiStateMachineVisitor extends PsiRecursiveElementWalkingVisitor {
 
                                 sm.stateDataList.add(d);
 
-                                sm.id = getStateMachineId(element);
+                                sm.id = getStateMachineId(
+                                        Objects.requireNonNull(rootStateMachine(element))
+                                );
 
                                 if (sm.id == null) {
                                     break;
@@ -68,21 +71,19 @@ public class PsiStateMachineVisitor extends PsiRecursiveElementWalkingVisitor {
         super.visitElement(element);
     }
 
-    public static @Nullable String getStateMachineId(@NotNull PsiElement element) {
+    public static @Nullable String getStateMachineId(@Nullable final PsiElement element) {
         // alright, we got a state, now let's figure out which objective this was in
-        final PsiElement smCandidate = rootStateMachine(element);
 
-        if (smCandidate == null) {
-            LOGGER.error(new AssertionError("Candidate was null, not sure why."));
+        if (element == null) {
+            LOGGER.info("Candidate was null.");
             return null;
         }
 
-        for (PsiElement smNodeChild : smCandidate.getChildren()) {
+        for (PsiElement smNodeChild : element.getChildren()) {
             if (className(smNodeChild).equals("JsonPropertyImpl")) {
                 for (PsiElement stateMachineChild : smNodeChild.getChildren()) {
                     if (className(stateMachineChild).equals("JsonStringLiteralImpl") && stateMachineChild.textMatches("\"Id\"")) {
                         // we got the Id field, let's get the value
-
                         final PsiElement idLiteral = stateMachineChild.getNextSibling().getNextSibling().getNextSibling();
 
                         return idLiteral.getText().replace("\"", "");

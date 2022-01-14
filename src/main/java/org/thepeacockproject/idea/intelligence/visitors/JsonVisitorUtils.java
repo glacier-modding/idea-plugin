@@ -32,21 +32,29 @@ public class JsonVisitorUtils {
     }
 
     /** This function assumes we are 5 nodes deep inside a state machine. */
-    public static @Nullable PsiElement rootStateMachine(@NotNull PsiElement maybeGggp) {
-        // gggp = great great grandparent
+    public static @Nullable PsiElement rootStateMachine(@NotNull final PsiElement node) {
+        return psiHoistNodes(node, 4);
+    }
 
-        // we'll try going up 5 times only
-        for (int i = 0; i < 4; i++) {
-            if (maybeGggp != null) {
-                maybeGggp = maybeGggp.getParent();
+    /**
+     * Get a PSI element that is up the tree by the selected number of nodes.
+     *
+     * @param node The current node.
+     * @param depth How far to go up.
+     * @return The node or null.
+     */
+    public static @Nullable PsiElement psiHoistNodes(@NotNull PsiElement node, final int depth) {
+        for (int i = 0; i < depth; i++) {
+            if (node != null) {
+                node = node.getParent();
             }
         }
 
-        if (maybeGggp == null) {
-            LOGGER.info("Wasn't able to find a grandparent :(");
+        if (node == null) {
+            LOGGER.info("Got a null element while hoisting.");
             return null;
         }
 
-        return maybeGggp;
+        return node;
     }
 }

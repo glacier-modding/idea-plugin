@@ -13,7 +13,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class PeacockProjectService {
     protected static final Logger LOGGER = Logger.getInstance("PeacockProjectService");
-    public Map<String, List<StateMachineData>> jsonData;
+    public final Map<String, List<StateMachineData>> jsonData;
 
     public PeacockProjectService(final @NotNull Project project) {
         LOGGER.info("Project service: " + project.getName());

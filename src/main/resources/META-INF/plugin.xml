@@ -11,6 +11,7 @@
         <projectService serviceImplementation="org.thepeacockproject.idea.services.PeacockProjectService" />
         <completion.contributor implementationClass="org.thepeacockproject.idea.intelligence.JsonExtraCompletionProvider" language="JSON" />
         <fileType name="OCRE" implementationClass="org.thepeacockproject.idea.ocre.OcreFileType" language="JSON" patterns="*.ocre" />
+        <gotoDeclarationHandler implementation="org.thepeacockproject.idea.intelligence.JsonGotoDeclarationHandler" />
     </extensions>
 
     <applicationListeners>
