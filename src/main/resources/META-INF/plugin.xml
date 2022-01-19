@@ -17,14 +17,17 @@
         <fileType name="REPO"
                   implementationClass="org.thepeacockproject.idea.repo.GameRepositoryFileType"
                   fileNames="006D6B8D26B0F442.REPO;00204D1AFD76AB13.REPO"
-                  language="JSON"
-        />
+                  language="JSON" />
         <gotoDeclarationHandler implementation="org.thepeacockproject.idea.intelligence.JsonGotoDeclarationHandler" />
         <applicationService serviceImplementation="org.thepeacockproject.idea.settings.PeacockSettingsState" />
         <applicationConfigurable parentId="tools"
                                  instance="org.thepeacockproject.idea.settings.PeacockSettingsConfigurable"
                                  id="org.thepeacockproject.idea.settings.PeacockSettingsConfigurable"
                                  displayName="Peacock Plugin" />
+        <toolWindow factoryClass="org.thepeacockproject.idea.ui.RepositoryToolWindow"
+                    id="Repository Browser"
+                    anchor="bottom"
+                    icon="AllIcons.Actions.ListFiles" />
     </extensions>
 
     <applicationListeners>
