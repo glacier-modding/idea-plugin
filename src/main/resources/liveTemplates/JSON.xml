@@ -1,0 +1,13 @@
+<templateSet group="JSON">
+  <template name="newobjective" value="{&#10;    &quot;Id&quot;: &quot;$ID$&quot;,&#10;    &quot;Type&quot;: &quot;statemachine&quot;,&#10;    &quot;Category&quot;: &quot;$CATEGORY$&quot;,&#10;    &quot;Scope&quot;: &quot;hit&quot;,&#10;    &quot;Image&quot;: &quot;$IMAGEURL$&quot;,&#10;    &quot;BriefingName&quot;: &quot;$BREIFINGNAME$&quot;,&#10;    &quot;BriefingText&quot;: &quot;$BRIEFINGTEXT$&quot;,&#10;    &quot;LongBriefingText&quot;: &quot;$BRIEFINGTEXT$&quot;,&#10;    &quot;HUDTemplate&quot;: {&#10;        &quot;display&quot;: &quot;$HUDDISPLAYNAME$&quot;&#10;    },&#10;    &quot;Definition&quot;: {&#10;        &quot;Context&quot;: {&#10;        },&#10;        &quot;States&quot;: {&#10;        }&#10;    }&#10;}" description="Create a new objective for a HITMAN contract." toReformat="true" toShortenFQNames="true">
+    <variable name="ID" expression="" defaultValue="" alwaysStopAt="true" />
+    <variable name="CATEGORY" expression="" defaultValue="Primary" alwaysStopAt="true" />
+    <variable name="IMAGEURL" expression="" defaultValue="images/contracts/assrace/assracetarget.jpg" alwaysStopAt="true" />
+    <variable name="BREIFINGNAME" expression="" defaultValue="" alwaysStopAt="true" />
+    <variable name="BRIEFINGTEXT" expression="" defaultValue="" alwaysStopAt="true" />
+    <variable name="HUDDISPLAYNAME" expression="" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="JSON" value="true" />
+    </context>
+  </template>
+</templateSet>

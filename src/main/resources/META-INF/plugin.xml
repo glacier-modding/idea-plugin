@@ -28,6 +28,10 @@
                     id="Repository Browser"
                     anchor="bottom"
                     icon="AllIcons.Actions.ListFiles" />
+        <annotator language="JSON"
+                   id="StateMachineAnnotator"
+                   implementationClass="org.thepeacockproject.idea.intelligence.StateMachineAnnotator" />
+        <defaultLiveTemplates file="/liveTemplates/JSON.xml" />
     </extensions>
 
     <applicationListeners>
