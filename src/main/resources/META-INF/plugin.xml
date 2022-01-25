@@ -9,7 +9,9 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <projectService serviceImplementation="org.thepeacockproject.idea.services.PeacockProjectService" />
-        <completion.contributor implementationClass="org.thepeacockproject.idea.intelligence.JsonExtraCompletionProvider" language="JSON" />
+        <completion.contributor
+                implementationClass="org.thepeacockproject.idea.intelligence.JsonExtraCompletionProvider"
+                language="JSON" />
         <fileType name="OCRE"
                   implementationClass="org.thepeacockproject.idea.ocre.OcreFileType"
                   language="JSON"
@@ -36,4 +38,14 @@
 
     <applicationListeners>
     </applicationListeners>
+
+    <actions>
+        <action id="Crc32Calculator"
+                class="org.thepeacockproject.idea.actions.Crc32Calculator"
+                text="CRC32 Calculator"
+        >
+            <add-to-group group-id="ToolsMenu" anchor="last" />
+            <keyboard-shortcut keymap="$default" first-keystroke="shift alt OPEN_BRACKET" />
+        </action>
+    </actions>
 </idea-plugin>

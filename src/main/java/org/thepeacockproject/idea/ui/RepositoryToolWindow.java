@@ -5,7 +5,6 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.openapi.wm.ToolWindowFactory;
 import com.intellij.ui.components.JBLabel;
-import com.intellij.ui.components.JBScrollPane;
 import com.intellij.ui.components.JBTextField;
 import com.intellij.util.ui.JBUI;
 import org.jetbrains.annotations.NotNull;
@@ -34,19 +33,13 @@ public class RepositoryToolWindow implements ToolWindowFactory {
 
         this.results = new JTextArea();
         this.results.setText("Waiting for search input...");
+        this.results.setEditable(false);
 
         searchBar.addActionListener(actionEvent ->
                 updateResultsByQuery(searchBar.getText().toLowerCase(Locale.ENGLISH))
         );
 
-        final JScrollPane scrollableContainer = new JBScrollPane(results);
-
-        scrollableContainer.setVerticalScrollBarPolicy(
-                JScrollPane.VERTICAL_SCROLLBAR_ALWAYS
-        );
-        scrollableContainer.setHorizontalScrollBarPolicy(
-                JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS
-        );
+        final JScrollPane scrollableContainer = new AlwaysShownJBScrollPane(results);
 
         final JPanel searchPanel = new JPanel();
 
