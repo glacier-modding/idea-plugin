@@ -1,9 +1,9 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
     <id>org.thepeacockproject.idea</id>
-    <name>Peacock for IDEA</name>
+    <name>Glacier² for IDEA</name>
     <vendor url="https://thepeacockproject.org" email="admin@thepeacockproject.org">The Peacock Project</vendor>
-    <description>Plugin that adds Peacock-specific functionality to the IDEA platform.</description>
+    <description>Plugin that adds Glacier² specific functionality to the IDEA platform.</description>
 
     <depends>com.intellij.modules.platform</depends>
 
@@ -34,6 +34,7 @@
                    id="StateMachineAnnotator"
                    implementationClass="org.thepeacockproject.idea.intelligence.StateMachineAnnotator" />
         <defaultLiveTemplates file="/liveTemplates/JSON.xml" />
+        <fileEditorProvider implementation="org.thepeacockproject.idea.intelligence.JsonFileEditorProvider" />
     </extensions>
 
     <applicationListeners>
