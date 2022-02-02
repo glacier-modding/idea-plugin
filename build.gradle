@@ -42,7 +42,7 @@ patchPluginXml {
     version = properties("pluginVersion")
     sinceBuild = properties("pluginSinceBuild")
     untilBuild = properties("pluginUntilBuild")
-    pluginDescription = "Plugin that adds Glacier specific functionality to the IDEA platform."
+    pluginDescription = "Plugin that adds Glacier² specific functionality to the IDEA platform."
     changeNotes = "No change notes available."
 }
 

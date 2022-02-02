@@ -5,6 +5,7 @@ import com.intellij.openapi.fileEditor.FileEditorLocation
 import com.intellij.openapi.fileEditor.FileEditorState
 import com.intellij.openapi.util.Key
 import com.intellij.openapi.vfs.VirtualFile
+import groovy.transform.CompileStatic
 import org.jetbrains.annotations.Nls
 import org.jetbrains.annotations.NotNull
 import org.jetbrains.annotations.Nullable
@@ -14,6 +15,7 @@ import javax.swing.JComponent
 import java.beans.PropertyChangeListener
 import java.nio.charset.StandardCharsets
 
+@CompileStatic
 class MenuFileEditor implements FileEditor {
     private final VirtualFile file
     private final JComponent editor

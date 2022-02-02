@@ -3,9 +3,11 @@ package org.thepeacockproject.idea.intelligence
 import com.intellij.openapi.fileEditor.*
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
+import groovy.transform.CompileStatic
 import org.jetbrains.annotations.NonNls
 import org.jetbrains.annotations.NotNull
 
+@CompileStatic
 class JsonFileEditorProvider implements FileEditorProvider {
     @Override
     boolean accept(@NotNull final Project project, @NotNull final VirtualFile file) {
