@@ -1,4 +1,4 @@
-package org.thepeacockproject.idea.intelligence
+package org.thepeacockproject.idea.editor.provider
 
 import com.intellij.openapi.fileEditor.*
 import com.intellij.openapi.project.Project
@@ -6,6 +6,7 @@ import com.intellij.openapi.vfs.VirtualFile
 import groovy.transform.CompileStatic
 import org.jetbrains.annotations.NonNls
 import org.jetbrains.annotations.NotNull
+import org.thepeacockproject.idea.editor.MenuFileEditor
 
 @CompileStatic
 class JsonFileEditorProvider implements FileEditorProvider {
