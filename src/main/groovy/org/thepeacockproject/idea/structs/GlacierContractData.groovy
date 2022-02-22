@@ -1,4 +1,4 @@
-package org.thepeacockproject.idea.structs;
+package org.thepeacockproject.idea.structs
 
 import com.google.gson.annotations.SerializedName
 import groovy.transform.CompileStatic

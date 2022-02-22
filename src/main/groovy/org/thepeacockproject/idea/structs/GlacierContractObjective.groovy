@@ -2,13 +2,10 @@ package org.thepeacockproject.idea.structs
 
 import com.google.gson.annotations.SerializedName
 import groovy.transform.CompileStatic
-import groovy.transform.builder.Builder
-import groovy.transform.builder.SimpleStrategy
 import org.jetbrains.annotations.NotNull
 import org.jetbrains.annotations.Nullable
 
 @CompileStatic
-@Builder(builderStrategy = SimpleStrategy)
 class GlacierContractObjective {
     @SerializedName("Id")
     @NotNull

@@ -4,6 +4,7 @@ import com.intellij.openapi.diagnostic.Logger
 import com.intellij.ui.treeStructure.Tree
 import groovy.json.JsonException
 import groovy.json.JsonSlurper
+import groovy.transform.CompileStatic
 import org.jetbrains.annotations.NotNull
 import org.jetbrains.annotations.Nullable
 
@@ -11,6 +12,7 @@ import javax.swing.tree.DefaultMutableTreeNode
 import javax.swing.tree.DefaultTreeModel
 import java.util.concurrent.atomic.AtomicInteger
 
+@CompileStatic
 class GTreeCreator {
     private static final Logger LOGGER = Logger.getInstance("GlacierTreeCreator")
 
@@ -41,75 +43,89 @@ class GTreeCreator {
     }
 
     @NotNull
-    static boolean isMenuNode(@Nullable final Map<String, ?> node) {
+    static boolean isMenuNode(@Nullable final def node) {
         if (node == null) {
             return false
         }
 
-        return node.containsKey("children")
+        return node instanceof Map && (node as Map).containsKey("children")
     }
 
     static void recursiveAddNodes(def children, DefaultMutableTreeNode parent) {
         final boolean isAMenuNode = isMenuNode(children)
 
         if (isAMenuNode) {
-            DefaultMutableTreeNode t = new DefaultMutableTreeNode("${children.get("id")} (${children.get("view")})")
+            Map<String, ?> node = (Map<String, ?>) children
+            DefaultMutableTreeNode t = new DefaultMutableTreeNode("${node.id} (${node.view})")
 
             parent.add(t)
 
             parent = t
         }
 
-        children.keySet().forEach({ key ->
-            final def value = children.get(key)
-            final boolean isObjectLike = value instanceof Map
-            final boolean isArrayLike = value instanceof List
+        if (children instanceof Map) {
+            children.keySet().forEach({ key ->
+                def value = children[key as String]
 
-            final String typeString = {
-                if (isObjectLike) {
-                    "object"
-                } else if (isArrayLike) {
-                    "array"
-                } else {
-                    "unknown"
-                }
+                itemsIteratorClosure(key as String, value, parent)
+            })
+        }
+
+        if (children instanceof List) {
+            for (int i = 0; i < children.size(); i++) {
+                def value = (children as List).get(i)
+
+                itemsIteratorClosure("[$i]" as String, value, parent)
             }
+        }
+    }
 
-            LOGGER.info("key: $key, value: $value, type: $typeString")
+    static void itemsIteratorClosure(String key, def value, DefaultMutableTreeNode parent) {
+        final boolean isObjectLike = value instanceof Map
+        final boolean isArrayLike = value instanceof List
 
+        final String typeString = {
             if (isObjectLike) {
-                final Map<String, ?> childrenMap = value as Map<String, ?>
-                final DefaultMutableTreeNode node = new DefaultMutableTreeNode(key)
-                parent.add(node)
-                recursiveAddNodes(childrenMap, node)
+                "object"
+            } else if (isArrayLike) {
+                "array"
+            } else {
+                "unknown"
             }
+        }
 
-            if (isArrayLike) {
-                final List<?> childrenArray = value as List<?>
-                final AtomicInteger i = new AtomicInteger(0)
+        LOGGER.info("key: $key, value: $value, type: $typeString")
 
-                final DefaultMutableTreeNode arrayNode = new DefaultMutableTreeNode(key)
+        if (isObjectLike) {
+            final Map<String, ?> childrenMap = value as Map<String, ?>
+            final DefaultMutableTreeNode node = new DefaultMutableTreeNode(key)
+            parent.add(node)
+            recursiveAddNodes(childrenMap, node)
+        }
 
-                parent.add(arrayNode)
+        if (isArrayLike) {
+            final List<?> childrenArray = value as List<?>
+            final AtomicInteger i = new AtomicInteger(0)
+            final DefaultMutableTreeNode arrayNode = new DefaultMutableTreeNode(key)
 
-                childrenArray.forEach {
-                    final DefaultMutableTreeNode node = new DefaultMutableTreeNode("[${i.getAndIncrement()}]")
+            parent.add(arrayNode)
 
-                    final boolean isChildObjectLike = it instanceof Map
+            childrenArray.forEach {
+                final DefaultMutableTreeNode node = new DefaultMutableTreeNode("[${i.getAndIncrement()}]")
+                final boolean isChildObjectLike = it instanceof Map
 
-                    arrayNode.add(node)
+                arrayNode.add(node)
 
-                    if (isChildObjectLike) {
-                        recursiveAddNodes(it, node)
-                    } else {
-                        node.add(new DefaultMutableTreeNode(it))
-                    }
+                if (isChildObjectLike) {
+                    recursiveAddNodes(it, node)
+                } else {
+                    node.add(new DefaultMutableTreeNode(it))
                 }
             }
+        }
 
-            if (!isObjectLike && !isArrayLike) {
-                parent.add(new DefaultMutableTreeNode("${key}: ${value}"))
-            }
-        })
+        if (!isObjectLike && !isArrayLike) {
+            parent.add(new DefaultMutableTreeNode("${key}: ${value}"))
+        }
     }
 }

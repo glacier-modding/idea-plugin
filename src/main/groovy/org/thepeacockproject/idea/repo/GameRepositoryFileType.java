@@ -2,6 +2,7 @@ package org.thepeacockproject.idea.repo;
 
 import com.intellij.icons.AllIcons;
 import com.intellij.json.JsonFileType;
+import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -26,5 +27,10 @@ public class GameRepositoryFileType extends JsonFileType {
     @Override
     public @Nullable Icon getIcon() {
         return AllIcons.Debugger.VariablesTab;
+    }
+
+    @Override
+    public @Nls @NotNull String getDisplayName() {
+        return "REPO";
     }
 }
