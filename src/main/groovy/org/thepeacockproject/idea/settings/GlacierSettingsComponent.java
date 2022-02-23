@@ -7,11 +7,11 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 
-public class PeacockSettingsComponent {
+public class GlacierSettingsComponent {
     private final JPanel mainPanel;
     private final JBTextField repositoryText = new JBTextField();
 
-    public PeacockSettingsComponent() {
+    public GlacierSettingsComponent() {
         mainPanel = FormBuilder.createFormBuilder()
                 .addLabeledComponent(new JBLabel("Paste the game's repository (.REPO file) here: "), repositoryText, 1, false)
                 .addComponentFillVertically(new JPanel(), 0)

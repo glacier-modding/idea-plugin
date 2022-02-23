@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.thepeacockproject.idea.intelligence.data.StateData;
 import org.thepeacockproject.idea.intelligence.data.StateMachineData;
-import org.thepeacockproject.idea.services.PeacockProjectService;
+import org.thepeacockproject.idea.services.GlacierProjectService;
 
 import java.util.List;
 import java.util.Objects;
@@ -41,9 +41,9 @@ public class JsonExtraCompletionProvider extends CompletionContributor {
         ) {
             LOGGER.info("Providing completions!");
 
-            final PeacockProjectService projectService = Objects
+            final GlacierProjectService projectService = Objects
                     .requireNonNull(parameters.getEditor().getProject())
-                    .getService(PeacockProjectService.class);
+                    .getService(GlacierProjectService.class);
 
             // TODO: Cache this
             projectService.computeFor(parameters.getOriginalFile());

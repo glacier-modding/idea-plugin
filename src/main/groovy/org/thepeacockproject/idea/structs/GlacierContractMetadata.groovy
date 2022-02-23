@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName
 import groovy.transform.CompileStatic
 import org.jetbrains.annotations.NotNull
 import org.jetbrains.annotations.Nullable
+import org.thepeacockproject.idea.editor.internal.WithContractType
 import org.thepeacockproject.idea.editor.internal.WithTextInput
 
 @CompileStatic
@@ -15,7 +16,7 @@ class GlacierContractMetadata {
 
     @SerializedName("Type")
     @NotNull
-    @WithTextInput("Contract type: ")
+    @WithContractType
     public String type
 
     @SerializedName("Title")

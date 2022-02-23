@@ -8,7 +8,7 @@
     <depends>com.intellij.modules.platform</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <projectService serviceImplementation="org.thepeacockproject.idea.services.PeacockProjectService" />
+        <projectService serviceImplementation="org.thepeacockproject.idea.services.GlacierProjectService" />
         <completion.contributor
                 implementationClass="org.thepeacockproject.idea.intelligence.JsonExtraCompletionProvider"
                 language="JSON" />
@@ -21,11 +21,11 @@
                   fileNames="006D6B8D26B0F442.REPO;00204D1AFD76AB13.REPO"
                   language="JSON" />
         <gotoDeclarationHandler implementation="org.thepeacockproject.idea.intelligence.JsonGotoDeclarationHandler" />
-        <applicationService serviceImplementation="org.thepeacockproject.idea.settings.PeacockSettingsState" />
+        <applicationService serviceImplementation="org.thepeacockproject.idea.settings.GlacierSettingsState" />
         <applicationConfigurable parentId="tools"
-                                 instance="org.thepeacockproject.idea.settings.PeacockSettingsConfigurable"
-                                 id="org.thepeacockproject.idea.settings.PeacockSettingsConfigurable"
-                                 displayName="Peacock Plugin" />
+                                 instance="org.thepeacockproject.idea.settings.GlacierSettingsConfigurable"
+                                 id="org.thepeacockproject.idea.settings.GlacierSettingsConfigurable"
+                                 displayName="Glacier² Plugin" />
         <toolWindow factoryClass="org.thepeacockproject.idea.ui.RepositoryToolWindow"
                     id="Repository Browser"
                     anchor="bottom"

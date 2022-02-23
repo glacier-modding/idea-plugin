@@ -5,7 +5,6 @@ String properties(String key) {
 plugins {
     id "groovy"
     id "org.jetbrains.intellij" version "1.4.0"
-    id "com.github.johnrengelman.shadow" version "7.1.2"
 }
 
 group = properties("pluginGroup")
@@ -17,8 +16,6 @@ repositories {
 }
 
 dependencies {
-    runtimeClasspath group: "org.codehaus.groovy", name: "groovy", version: "2.5.15"
-    runtimeClasspath group: "org.codehaus.groovy", name: "groovy-json", version: "2.5.15"
 }
 
 // Configure Gradle IntelliJ Plugin - read more: https://github.com/JetBrains/gradle-intellij-plugin
@@ -62,17 +59,6 @@ publishPlugin {
 
 jar {
     duplicatesStrategy = DuplicatesStrategy.WARN
-}
-
-shadowJar {
-    minimize()
-    relocate "groovy", "g2groovy"
-    relocate "org.codehaus", "g2groovy.codehaus"
-    relocate "org.apache", "g2groovy.apache"
-}
-
-build {
-    dependsOn shadowJar
 }
 
 tasks.withType(AbstractArchiveTask) {

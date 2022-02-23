@@ -11,11 +11,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class PeacockProjectService {
-    protected static final Logger LOGGER = Logger.getInstance("PeacockProjectService");
+public class GlacierProjectService {
+    protected static final Logger LOGGER = Logger.getInstance("GlacierProjectService");
     public final Map<String, List<StateMachineData>> jsonData;
 
-    public PeacockProjectService(final @NotNull Project project) {
+    public GlacierProjectService(final @NotNull Project project) {
         LOGGER.info("Project service: " + project.getName());
 
         this.jsonData = new ConcurrentHashMap<>();

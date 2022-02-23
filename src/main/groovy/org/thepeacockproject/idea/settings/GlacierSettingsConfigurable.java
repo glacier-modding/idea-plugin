@@ -6,13 +6,13 @@ import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 
-public class PeacockSettingsConfigurable implements Configurable {
-    private PeacockSettingsComponent settingsComponent;
+public class GlacierSettingsConfigurable implements Configurable {
+    private GlacierSettingsComponent settingsComponent;
 
     @Nls(capitalization = Nls.Capitalization.Title)
     @Override
     public String getDisplayName() {
-        return "Peacock Plugin";
+        return "Glacier² Plugin";
     }
 
     @Override
@@ -23,26 +23,26 @@ public class PeacockSettingsConfigurable implements Configurable {
     @Nullable
     @Override
     public JComponent createComponent() {
-        settingsComponent = new PeacockSettingsComponent();
+        settingsComponent = new GlacierSettingsComponent();
         return settingsComponent.getPanel();
     }
 
     @Override
     public boolean isModified() {
-        final PeacockSettingsState settings = PeacockSettingsState.getInstance();
+        final GlacierSettingsState settings = GlacierSettingsState.getInstance();
 
         return !settingsComponent.getRepositoryText().equals(settings.repository);
     }
 
     @Override
     public void apply() {
-        final PeacockSettingsState settings = PeacockSettingsState.getInstance();
+        final GlacierSettingsState settings = GlacierSettingsState.getInstance();
         settings.repository = settingsComponent.getRepositoryText();
     }
 
     @Override
     public void reset() {
-        final PeacockSettingsState settings = PeacockSettingsState.getInstance();
+        final GlacierSettingsState settings = GlacierSettingsState.getInstance();
         settingsComponent.setRepositoryText(settings.repository);
     }
 

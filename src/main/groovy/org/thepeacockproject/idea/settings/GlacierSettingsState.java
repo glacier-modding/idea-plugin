@@ -10,23 +10,23 @@ import org.jetbrains.annotations.Nullable;
 
 @State(
         name = "org.thepeacockproject.idea",
-        storages = @Storage("PeacockPlugin.xml")
+        storages = @Storage("GlacierPlugin.xml")
 )
-public class PeacockSettingsState implements PersistentStateComponent<PeacockSettingsState> {
+public class GlacierSettingsState implements PersistentStateComponent<GlacierSettingsState> {
     public String repository = "";
 
-    public static PeacockSettingsState getInstance() {
-        return ApplicationManager.getApplication().getService(PeacockSettingsState.class);
+    public static GlacierSettingsState getInstance() {
+        return ApplicationManager.getApplication().getService(GlacierSettingsState.class);
     }
 
     @Nullable
     @Override
-    public PeacockSettingsState getState() {
+    public GlacierSettingsState getState() {
         return this;
     }
 
     @Override
-    public void loadState(@NotNull final PeacockSettingsState state) {
+    public void loadState(@NotNull final GlacierSettingsState state) {
         XmlSerializerUtil.copyBean(state, this);
     }
 }

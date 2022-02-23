@@ -5,7 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.intellij.openapi.diagnostic.Logger;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.thepeacockproject.idea.settings.PeacockSettingsState;
+import org.thepeacockproject.idea.settings.GlacierSettingsState;
 
 public class RepositoryManager {
     private static final Logger LOGGER = Logger.getInstance("PeacockRepositoryManager");
@@ -18,7 +18,7 @@ public class RepositoryManager {
 
     @Nullable
     public GameRepositoryEntry[] getEntries() {
-        final PeacockSettingsState settingsState = PeacockSettingsState.getInstance();
+        final GlacierSettingsState settingsState = GlacierSettingsState.getInstance();
 
         if (settingsState == null) {
             return null;

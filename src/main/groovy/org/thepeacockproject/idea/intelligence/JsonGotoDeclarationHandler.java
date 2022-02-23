@@ -8,7 +8,7 @@ import org.jetbrains.annotations.Nullable;
 import org.thepeacockproject.idea.intelligence.data.StateData;
 import org.thepeacockproject.idea.intelligence.data.StateMachineData;
 import org.thepeacockproject.idea.intelligence.visitors.PsiStateMachineVisitor;
-import org.thepeacockproject.idea.services.PeacockProjectService;
+import org.thepeacockproject.idea.services.GlacierProjectService;
 
 import java.util.List;
 import java.util.Objects;
@@ -44,9 +44,9 @@ public class JsonGotoDeclarationHandler implements GotoDeclarationHandler {
 
             final String stateMachineId = PsiStateMachineVisitor.getStateMachineId(r);
 
-            final PeacockProjectService projectService = Objects
+            final GlacierProjectService projectService = Objects
                     .requireNonNull(editor.getProject())
-                    .getService(PeacockProjectService.class);
+                    .getService(GlacierProjectService.class);
 
             // TODO: Cache this
             projectService.computeFor(sourceElement.getContainingFile());

@@ -46,4 +46,8 @@ class GlacierContractObjective {
     @SerializedName("ExcludeFromScoring")
     @Nullable
     public boolean excludeFromScoring
+
+    @SerializedName("Definition")
+    @NotNull
+    public GlacierContractObjectiveDefinition definition
 }

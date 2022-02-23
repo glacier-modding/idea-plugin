@@ -15,12 +15,14 @@ import org.jetbrains.annotations.Nls
 import org.jetbrains.annotations.NotNull
 import org.jetbrains.annotations.Nullable
 import org.thepeacockproject.idea.editor.internal.WithCheckBox
+import org.thepeacockproject.idea.editor.internal.WithContractType
 import org.thepeacockproject.idea.editor.internal.WithTextInput
 import org.thepeacockproject.idea.structs.GlacierContract
 import org.thepeacockproject.idea.structs.GlacierContractData
 import org.thepeacockproject.idea.structs.GlacierContractMetadata
 
 import javax.swing.JCheckBox
+import javax.swing.JComboBox
 import javax.swing.JComponent
 import javax.swing.JPanel
 import javax.swing.JTextField
@@ -53,11 +55,11 @@ class ContractFileEditor implements FileEditor {
     void pushChanges() {
         final def s = GSON.toJson(this.activeEditingContract)
 
-        ApplicationManager.getApplication().runWriteAction({
-            long t = System.currentTimeMillis()
+        ApplicationManager.getApplication().runWriteAction {
+            final long t = System.currentTimeMillis()
 
             this.file.setBinaryContent(s.getBytes(StandardCharsets.UTF_8), t, t)
-        })
+        }
     }
 
     @Override
@@ -118,7 +120,7 @@ class ContractFileEditor implements FileEditor {
     }
 
     @Override
-    <T> void putUserData(@NotNull Key<T> key, @Nullable T value) {
+    <T> void putUserData(@NotNull final Key<T> key, @Nullable final T value) {
 
     }
 
@@ -134,14 +136,15 @@ class ContractFileEditor implements FileEditor {
 
         List<FormBuilderHolder> listOfItems = []
 
-        def closure = { Field it, boolean isMetadata ->
+        final def closure = { Field it, boolean isMetadata ->
             final def wti = it.getAnnotation(WithTextInput.class)
             final def wcb = it.getAnnotation(WithCheckBox.class)
+            final def wct = it.getAnnotation(WithContractType.class)
 
             def value
 
             try {
-                def holder = isMetadata ? this.activeEditingContract.metadata : this.activeEditingContract.data
+                final def holder = isMetadata ? this.activeEditingContract.metadata : this.activeEditingContract.data
 
                 value = holder.getProperty(it.getName())
             } catch (MissingPropertyException ignored) {
@@ -165,6 +168,15 @@ class ContractFileEditor implements FileEditor {
                 final FormBuilderHolder h = new FormBuilderHolder(
                         label: new JBLabel(wcb.value()),
                         item: new JCheckBox("", value as boolean)
+                )
+
+                listOfItems.add(h)
+            }
+
+            if (wct != null) {
+                final FormBuilderHolder h = new FormBuilderHolder(
+                        label: new JBLabel("Contract type: "),
+                        item: new JComboBox<String>(wct.value())
                 )
 
                 listOfItems.add(h)
