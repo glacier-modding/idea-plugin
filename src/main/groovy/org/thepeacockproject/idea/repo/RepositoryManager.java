@@ -8,7 +8,7 @@ import org.jetbrains.annotations.Nullable;
 import org.thepeacockproject.idea.settings.GlacierSettingsState;
 
 public class RepositoryManager {
-    private static final Logger LOGGER = Logger.getInstance("PeacockRepositoryManager");
+    private static final Logger LOGGER = Logger.getInstance("GlacierRepositoryManager");
     private static final RepositoryManager INSTANCE = new RepositoryManager();
 
     @NotNull

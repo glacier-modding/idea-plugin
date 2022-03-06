@@ -39,6 +39,10 @@ class GTreeCreator {
 
         final Tree t = new Tree(new DefaultTreeModel(root))
 
+        final TreeMouseListener ml = new TreeMouseListener(tree: t)
+
+        t.addMouseListener(ml)
+
         return t
     }
 
@@ -84,15 +88,7 @@ class GTreeCreator {
         final boolean isObjectLike = value instanceof Map
         final boolean isArrayLike = value instanceof List
 
-        final String typeString = {
-            if (isObjectLike) {
-                "object"
-            } else if (isArrayLike) {
-                "array"
-            } else {
-                "unknown"
-            }
-        }
+        final String typeString = isObjectLike ? "object" : (isArrayLike ? "array" : "unknown")
 
         LOGGER.info("key: $key, value: $value, type: $typeString")
 

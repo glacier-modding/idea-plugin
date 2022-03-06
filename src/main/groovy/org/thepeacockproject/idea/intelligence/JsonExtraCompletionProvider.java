@@ -18,7 +18,7 @@ import java.util.Objects;
 import static org.thepeacockproject.idea.intelligence.visitors.JsonVisitorUtils.*;
 
 public class JsonExtraCompletionProvider extends CompletionContributor {
-    private static final Logger LOGGER = Logger.getInstance("PeacockJsonCompletionProvider");
+    private static final Logger LOGGER = Logger.getInstance("GlacierJsonCompletionProvider");
 
     @Override
     public void fillCompletionVariants(
