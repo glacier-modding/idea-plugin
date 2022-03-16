@@ -95,12 +95,12 @@ class ContractFileEditor implements FileEditor {
     }
 
     @Override
-    void addPropertyChangeListener(@NotNull PropertyChangeListener listener) {
+    void addPropertyChangeListener(@NotNull final PropertyChangeListener listener) {
 
     }
 
     @Override
-    void removePropertyChangeListener(@NotNull PropertyChangeListener listener) {
+    void removePropertyChangeListener(@NotNull final PropertyChangeListener listener) {
 
     }
 
@@ -115,7 +115,7 @@ class ContractFileEditor implements FileEditor {
     }
 
     @Override
-    <T> T getUserData(@NotNull Key<T> key) {
+    <T> T getUserData(@NotNull final Key<T> key) {
         return null
     }
 

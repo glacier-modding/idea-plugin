@@ -33,4 +33,8 @@ class GlacierContractMetadata {
     @Nullable
     @WithTextInput("Contract tile image: ")
     public String tileImage
+
+    @SerializedName("InGroup")
+    @Nullable
+    public String inGroup
 }
