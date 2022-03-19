@@ -62,7 +62,7 @@ public class JsonExtraCompletionProvider extends CompletionContributor {
 
                         @Override
                         public @Nullable PsiElement getPsiElement() {
-                            return state.anchor;
+                            return state.anchor.getElement();
                         }
                     });
                 }

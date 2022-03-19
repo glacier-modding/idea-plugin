@@ -61,7 +61,7 @@ public class JsonGotoDeclarationHandler implements GotoDeclarationHandler {
 
                     for (StateData state : sm.stateDataList) {
                         if (sourceElement.textMatches("\"" + state.name + "\"")) {
-                            return new PsiElement[] { state.anchor };
+                            return new PsiElement[] { state.anchor.getElement() };
                         }
                     }
 

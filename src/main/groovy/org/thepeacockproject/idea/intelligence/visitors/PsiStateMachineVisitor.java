@@ -46,7 +46,7 @@ public class PsiStateMachineVisitor extends PsiRecursiveElementWalkingVisitor {
                     if (child.getChildren().length > 0) {
                         for (PsiElement grandChild : child.getChildren()) {
                             if (className(grandChild).equals("JsonStringLiteralImpl")) {
-                                final StateData d = new StateData(grandChild.getText().replace("\"", ""), grandChild);
+                                final StateData d = new StateData(grandChild.getText().replace("\"", ""), StateData.getPointerFor(grandChild));
 
                                 final StateMachineData sm = new StateMachineData();
 
