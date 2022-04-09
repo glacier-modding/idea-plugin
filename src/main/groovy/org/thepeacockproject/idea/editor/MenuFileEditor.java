@@ -27,7 +27,7 @@ public class MenuFileEditor implements FileEditor {
 
     @Nullable
     protected JComponent createPanel() throws IOException {
-        return GTreeCreator.createRecursiveTreeFrom(new String(this.file.contentsToByteArray(), StandardCharsets.UTF_8));
+        return new GTreeCreator(new String(this.file.contentsToByteArray(), StandardCharsets.UTF_8)).createRecursiveTree();
     }
 
     @Override

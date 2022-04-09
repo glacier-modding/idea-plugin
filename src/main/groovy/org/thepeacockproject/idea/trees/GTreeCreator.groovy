@@ -17,23 +17,29 @@ class GTreeCreator {
     private static final Logger LOGGER = Logger.getInstance("GlacierTreeCreator")
 
     @Nullable
-    static Tree createRecursiveTreeFrom(@Nullable final String json) {
+    def parsed = null
+
+    GTreeCreator(@Nullable final String json) {
         if (json == null || json.isEmpty()) {
-            return null
+            return
         }
 
         final JsonSlurper slurper = new JsonSlurper()
 
-        def parsed
-
         try {
-            parsed = slurper.parseText(json)
+            this.parsed = slurper.parseText(json)
         } catch (JsonException e) {
             LOGGER.info("Parsing of JSON failed: ${e.getMessage()}")
+        }
+    }
+
+    @Nullable
+    Tree createRecursiveTree() {
+        if (this.parsed == null) {
             return null
         }
 
-        final DefaultMutableTreeNode root = new DefaultMutableTreeNode("Menu")
+        final TreeNodeWithData root = new TreeNodeWithData("Menu", "_ROOTOBJECT")
 
         recursiveAddNodes(parsed, root)
 
@@ -55,12 +61,22 @@ class GTreeCreator {
         return node instanceof Map && (node as Map).containsKey("children")
     }
 
-    static void recursiveAddNodes(def children, DefaultMutableTreeNode parent) {
+    /**
+     * Delegates iteration of the next node to {@link GTreeCreator#itemsIteratorClosure}.
+     * Note: no nodes are created in this function. All of that is handled elsewhere, this
+     * just handles object-like and array-like things.
+     *
+     * @param children The parent's child nodes.
+     * @param parent The parent node.
+     */
+    static void recursiveAddNodes(@NotNull final def children, @NotNull TreeNodeWithData parent) {
         final boolean isAMenuNode = isMenuNode(children)
 
         if (isAMenuNode) {
-            Map<String, ?> node = (Map<String, ?>) children
-            DefaultMutableTreeNode t = new DefaultMutableTreeNode("${node.id} (${node.view})")
+            final Map<String, ?> node = (Map<String, ?>) children
+            final TreeNodeWithData t = new TreeNodeWithData("${node.id} (${node.view})", parent.peacockPath)
+
+            parent.realChild = t
 
             parent.add(t)
 
@@ -68,23 +84,29 @@ class GTreeCreator {
         }
 
         if (children instanceof Map) {
-            children.keySet().forEach({ key ->
-                def value = children[key as String]
+            children.keySet().forEach { key ->
+                final def value = children[key as String]
 
                 itemsIteratorClosure(key as String, value, parent)
-            })
+            }
         }
 
         if (children instanceof List) {
             for (int i = 0; i < children.size(); i++) {
-                def value = (children as List).get(i)
+                final def value = (children as List).get(i)
 
                 itemsIteratorClosure("[$i]" as String, value, parent)
             }
         }
     }
 
-    static void itemsIteratorClosure(String key, def value, DefaultMutableTreeNode parent) {
+    /**
+     * Iterates over every individual node, deciding what to do with it.
+     * @param key The node's key.
+     * @param value The node's value.
+     * @param parent The node's parent.
+     */
+    static void itemsIteratorClosure(@NotNull String key, @NotNull def value, @NotNull TreeNodeWithData parent) {
         final boolean isObjectLike = value instanceof Map
         final boolean isArrayLike = value instanceof List
 
@@ -94,34 +116,44 @@ class GTreeCreator {
 
         if (isObjectLike) {
             final Map<String, ?> childrenMap = value as Map<String, ?>
-            final DefaultMutableTreeNode node = new DefaultMutableTreeNode(key)
+            final TreeNodeWithData node = new TreeNodeWithData(key, parent.peacockPath + ".$key")
             parent.add(node)
             recursiveAddNodes(childrenMap, node)
+            return
         }
 
         if (isArrayLike) {
             final List<?> childrenArray = value as List<?>
             final AtomicInteger i = new AtomicInteger(0)
-            final DefaultMutableTreeNode arrayNode = new DefaultMutableTreeNode(key)
+            final DefaultMutableTreeNode arrayNode = new TreeNodeWithData(key, parent.peacockPath)
 
             parent.add(arrayNode)
 
             childrenArray.forEach {
-                final DefaultMutableTreeNode node = new DefaultMutableTreeNode("[${i.getAndIncrement()}]")
-                final boolean isChildObjectLike = it instanceof Map
+                final int index = i.getAndIncrement()
+                final TreeNodeWithData node = new TreeNodeWithData("[$index]", parent.peacockPath + "[$index]")
 
                 arrayNode.add(node)
 
-                if (isChildObjectLike) {
-                    recursiveAddNodes(it, node)
-                } else {
-                    node.add(new DefaultMutableTreeNode(it))
-                }
+                recursiveAddNodes(it, node)
             }
+            return
         }
 
         if (!isObjectLike && !isArrayLike) {
-            parent.add(new DefaultMutableTreeNode("${key}: ${value}"))
+            parent.add(new TreeNodeWithData("${key}: ${value}", parent.peacockPath + ".$key"))
+        }
+    }
+
+    protected static final class TreeNodeWithData extends DefaultMutableTreeNode {
+        @NotNull
+        final String peacockPath
+        @Nullable
+        TreeNodeWithData realChild = null
+
+        TreeNodeWithData(@NotNull final def text, @NotNull final String peacockPath) {
+            super(text)
+            this.peacockPath = peacockPath
         }
     }
 }
