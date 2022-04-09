@@ -16,7 +16,7 @@ import java.util.Objects;
 import static org.thepeacockproject.idea.intelligence.visitors.JsonVisitorUtils.*;
 
 public class JsonGotoDeclarationHandler implements GotoDeclarationHandler {
-    private static final Logger LOGGER = Logger.getInstance("PeacockJsonGotoDeclarationHandler");
+    private static final Logger LOGGER = Logger.getInstance("GlacierJsonGotoDeclarationHandler");
 
     @Override
     public PsiElement @Nullable [] getGotoDeclarationTargets(@Nullable final PsiElement sourceElement, final int offset, final Editor editor) {

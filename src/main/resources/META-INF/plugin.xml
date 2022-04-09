@@ -35,7 +35,6 @@
                    implementationClass="org.thepeacockproject.idea.intelligence.StateMachineAnnotator" />
         <defaultLiveTemplates file="/liveTemplates/JSON.xml" />
         <fileEditorProvider implementation="org.thepeacockproject.idea.editor.provider.JsonFileEditorProvider" />
-        <fileEditorProvider implementation="org.thepeacockproject.idea.editor.provider.ContractEditorProvider" />
     </extensions>
 
     <applicationListeners>
