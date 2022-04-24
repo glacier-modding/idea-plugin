@@ -4,7 +4,7 @@ String properties(String key) {
 
 plugins {
     id "groovy"
-    id "org.jetbrains.intellij" version "1.4.0"
+    id "org.jetbrains.intellij" version "1.5.3"
 }
 
 group = properties("pluginGroup")
@@ -24,7 +24,7 @@ intellij {
     version = properties("platformVersion")
     type = properties("platformType")
 
-    plugins = []
+    plugins = ("true" == properties("enableJs")) ? ["JavaScript"] : []
 }
 
 String javaVersion = properties("javaVersion")
@@ -40,10 +40,6 @@ wrapper {
 
 patchPluginXml {
     version = properties("pluginVersion")
-    sinceBuild = properties("pluginSinceBuild")
-    untilBuild = properties("pluginUntilBuild")
-    pluginDescription = "Plugin that adds Glacier² specific functionality to the IDEA platform."
-    changeNotes = "No change notes available."
 }
 
 signPlugin {

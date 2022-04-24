@@ -8,8 +8,10 @@ import groovy.transform.CompileStatic
 import org.jetbrains.annotations.NotNull
 import org.jetbrains.annotations.Nullable
 
+import javax.swing.JTree
 import javax.swing.tree.DefaultMutableTreeNode
 import javax.swing.tree.DefaultTreeModel
+import javax.swing.tree.TreePath
 import java.util.concurrent.atomic.AtomicInteger
 
 @CompileStatic
@@ -18,6 +20,9 @@ class GTreeCreator {
 
     @Nullable
     def parsed = null
+
+    @Nullable
+    TreeMouseListener mouseListener
 
     GTreeCreator(@Nullable final String json) {
         if (json == null || json.isEmpty()) {
@@ -45,9 +50,9 @@ class GTreeCreator {
 
         final Tree t = new Tree(new DefaultTreeModel(root))
 
-        final TreeMouseListener ml = new TreeMouseListener(tree: t)
+        this.mouseListener = new TreeMouseListener(tree: t, creator: this)
 
-        t.addMouseListener(ml)
+        t.addMouseListener(this.mouseListener)
 
         return t
     }
@@ -137,12 +142,16 @@ class GTreeCreator {
 
                 recursiveAddNodes(it, node)
             }
+
             return
         }
 
         if (!isObjectLike && !isArrayLike) {
             parent.add(new TreeNodeWithData("${key}: ${value}", parent.peacockPath + ".$key"))
         }
+    }
+
+    static void onRemove(TreePath path, JTree tree) {
     }
 
     protected static final class TreeNodeWithData extends DefaultMutableTreeNode {
